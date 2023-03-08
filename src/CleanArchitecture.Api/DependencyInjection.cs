@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using Swashbuckle.AspNetCore.Filters;
 using CleanArchitecture.Api.Common.Mapping;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace CleanArchitecture.Api;
 
@@ -34,7 +34,7 @@ public static class DependencyInjection
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 
             options.EnableAnnotations();
-            options.ExampleFilters();
+            //options.ExampleFilters();
         });
 
         return services;

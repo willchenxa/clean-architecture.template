@@ -4,18 +4,19 @@ using MapsterMapper;
 using MediatR;
 using CleanArchitecture.Application.Weather.Queries;
 using CleanArchitecture.Contracts.Weather;
+using ErrorOr;
 
 namespace CleanArchitecture.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ApiController
+public class WeatherController : ApiController
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<WeatherController> _logger;
 
-    public WeatherForecastController(IMapper mapper, ISender mediator, ILogger<WeatherForecastController> logger)
+    public WeatherController(IMapper mapper, ISender mediator, ILogger<WeatherController> logger)
     {
         _mapper = mapper;
         _mediator = mediator;
@@ -30,7 +31,6 @@ public class WeatherForecastController : ApiController
 
         return result.Match(
             weatherResult => Ok(_mapper.Map<WeatherResponse>(weatherResult)),
-            errors => Problem(errors)
-        );
+            errors => Problem(errors));
     }
 }
