@@ -33,6 +33,8 @@ jobs:
             ${{ runner.os }}-nuget
       - name: Install dependencies
         run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
       - name: Pack
