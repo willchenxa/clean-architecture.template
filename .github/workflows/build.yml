@@ -2,9 +2,9 @@ name: cleanarchitecure.template
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -33,13 +33,6 @@ jobs:
             ${{ runner.os }}-nuget
       - name: Install dependencies
         run: dotnet restore
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: pwsh
-        run: |
-          run: dotnet test --no-build --configuration Release
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
       - name: Pack
