@@ -1,10 +1,10 @@
-
 using Microsoft.AspNetCore.Mvc;
 using MapsterMapper;
 using MediatR;
 using CleanArchitecture.Application.Weather.Queries;
 using CleanArchitecture.Contracts.Weather;
-using ErrorOr;
+using CleanArchitecture.Api.Swagger;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace CleanArchitecture.Api.Controllers;
 
@@ -24,6 +24,11 @@ public class WeatherController : ApiController
     }
 
     [HttpGet(Name = "Forecast")]
+    [ProducesResponseType(typeof(WeatherResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(WeatherResponseExample))]
+    [ProducesDefaultResponseType]
     public async Task<IActionResult> Get(WeatherRequest request, CancellationToken cancellationToken)
     {
         var query = _mapper.Map<WeatherQuery>(request);
